@@ -1,7 +1,7 @@
 const { app, BrowserWindow, shell, session } = require('electron');
 const path = require('path');
 
-const PLAY_URL = 'https://appetize.io/app/b_vmsfd6j2qw2ffdla37n7taxgdq';
+const PLAY_URL = 'https://appetize.io/embed/b_vmsfd6j2qw2ffdla37n7taxgdq?screenOnly=true';
 let homeWindow;
 let playWindow;
 
@@ -38,6 +38,7 @@ function openPlayWindow() {
     height: 900,
     minWidth: 900,
     minHeight: 640,
+    fullscreen: true,
     backgroundColor: '#0b0c12',
     icon: path.join(__dirname, 'assets', 'app-icon.ico'),
     title: 'Meta AI — Appetize Session',
@@ -56,10 +57,10 @@ function openPlayWindow() {
 
 app.whenReady().then(() => {
   app.setAppUserModelId('ai.muse.meta.desktop');
-  createHomeWindow();
+  openPlayWindow();
 
   app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createHomeWindow();
+    if (BrowserWindow.getAllWindows().length === 0) openPlayWindow();
   });
 });
 
@@ -67,7 +68,7 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
 
-app.on('web-contents-created', (_event, contents) => {
+app.on('web-contents-created' , (_event, contents) => {
   contents.setWindowOpenHandler(({ url }) => {
     if (url.startsWith('https://')) {
       shell.openExternal(url);
