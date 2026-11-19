@@ -50,3 +50,5 @@
 - `.github/workflows/deploy-pages.yml` — optional GitHub Pages deployment for `site/`.
 - `.gitignore` — ignores dependencies, build output, logs, and local secrets.
 - `docs/GITHUB-BUILD.md` — exact local and GitHub build instructions.
+
+- `assets/screenshots/electron-launcher.png` — supplied screenshot of the working Electron desktop launcher.

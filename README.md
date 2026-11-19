@@ -37,11 +37,17 @@ npm install
 npm start
 ```
 
-Click **Launch Meta AI** in the local Electron window. The launcher opens the configured Appetize Play URL in a separate window. Internet access and an available Appetize session are required.
+Click **Launch Meta AI** in the local Electron window. The launcher opens the configured Appetize Play URL in a separate Electron window. Internet access and an available Appetize session are required.
+
+The desktop launcher is working software, not a mockup:
+
+![Working Meta AI Desktop Electron launcher with the Launch Meta AI button](assets/screenshots/electron-launcher.png)
+
+After clicking **Launch Meta AI**, the second window is the real Android Meta AI application running inside the Appetize emulator. If it opens on the Meta AI welcome screen, click **Get started with Meta AI** inside that emulator window. That welcome screen is the streamed app itself—not a preview page and not a native Windows build.
 
 ## Screenshots
 
-The screenshots below were rendered from the repository's actual static site with Chromium after restoring the shared stylesheet. They show the main workflow, a meaningful community layout, and the payment age-gate route.
+The screenshot above is the working Electron launcher. The screenshots below are separate authentic static-site pages rendered from this repository with Chromium; they are documentation for the companion `site/` package, not substitutes for the desktop app or the Appetize session.
 
 | Landing page | Community page |
 |---|---|
