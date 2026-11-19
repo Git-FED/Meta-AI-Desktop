@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Replace this sitemap URL with the final GitHub Pages or Cloudflare Pages domain.
+Sitemap: https://example.com/sitemap.xml

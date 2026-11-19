@@ -1,0 +1,47 @@
+{
+  "name": "meta-ai-desktop",
+  "version": "300.0.0.0.153",
+  "description": "A local dark desktop launcher for the Meta AI Android Appetize build.",
+  "main": "main.js",
+  "author": "Muse Ai",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win",
+    "build:dir": "electron-builder --dir"
+  },
+  "devDependencies": {
+    "electron": "latest",
+    "electron-builder": "latest"
+  },
+  "build": {
+    "appId": "ai.muse.meta.desktop",
+    "productName": "Meta AI Desktop",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "index.html",
+      "renderer.js",
+      "styles.css",
+      "assets/**/*",
+      "docs/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "Meta AI Desktop"
+    }
+  }
+}
