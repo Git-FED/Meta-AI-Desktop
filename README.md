@@ -8,6 +8,8 @@ A local Electron launcher for a remote Meta AI Android build, paired with a dark
 
 > **Two deliverables, one repository:** the root project is the desktop wrapper; [`site/`](site/) is an independent GitHub Pages / Cloudflare Pages package.
 
+<img width="1285" height="692" alt="Screenshot 2026-11-18 213633" src="https://github.com/user-attachments/assets/26f00306-f1be-4b70-9304-19b2be1d06f9" />
+
 ## Why this exists
 
 Testing an Android build from a desktop usually means juggling a browser tab, a long Appetize URL, and scattered notes about what is actually running remotely. This project turns that into a focused desktop doorway: launch the local Electron shell, then open the Appetize session only when you need it.
