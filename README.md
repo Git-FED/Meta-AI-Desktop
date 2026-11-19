@@ -1,5 +1,7 @@
 # Meta AI Desktop + Git-FED Static Site
 
+<img width="255" height="50" alt="Screenshot 2026-11-19 074525" src="https://github.com/user-attachments/assets/49e0870d-5167-4b71-821f-b86c3e39e696" />
+
 A local Electron launcher for a remote Meta AI Android build, paired with a dark, animated Git-FED promotional site that can be deployed as plain static HTML.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-8aa8ff.svg)](LICENSE)
