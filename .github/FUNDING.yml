@@ -20,8 +20,9 @@ patreon: fedpromptly             # https://www.patreon.com/cw/fedpromptly
 # Buy Me a Coffee
 buy_me_a_coffee: fedpromptly     # https://buymeacoffee.com/fedpromptly
 
-#Discord
-Discord: fedpromptly             # https://discord.gg/Jm4XStx4Pf
+# thanks.dev — GitHub's format is u/gh/USERNAME, using the GitHub account
+# name (git-fed), not the brand name. This is the funding entry.
+thanks_dev: u/gh/git-fed         # https://thanks.dev/u/gh/git-fed
 
 # Other supported funding platforms — uncomment only if/when created
 # open_collective: fed-poster    # uncomment if an Open Collective is created
@@ -31,7 +32,6 @@ Discord: fedpromptly             # https://discord.gg/Jm4XStx4Pf
 # community_bridge: fed-poster   # uncomment for Community Bridge
 # polar: fed-poster              # uncomment for Polar.sh issue funding
 # tidelift: npm/fed-poster       # uncomment for Tidelift, or use appropriate platform/package-name
-# thanks_dev: u/gh/fedpromptly   # verify exact thanks.dev format before enabling
 # otechie: fedposter             # uncomment if an Otechie account is created
 
 # Custom links (max 4; direct Ko-fi link omitted because ko_fi already covers it)
