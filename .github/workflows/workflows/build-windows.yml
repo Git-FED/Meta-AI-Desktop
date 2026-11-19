@@ -1,0 +1,84 @@
+name: Build Windows Electron app
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-windows:
+    name: Build Windows installer and portable app
+    runs-on: windows-latest
+    env:
+      APPETIZE_URL: https://appetize.io/app/b_vmsfd6j2qw2ffdla37n7taxgdq
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate desktop JavaScript
+        shell: pwsh
+        run: |
+          node --check main.js
+          node --check preload.js
+          node --check renderer.js
+
+      - name: Verify Appetize destination
+        shell: pwsh
+        run: |
+          if (-not (Select-String -Path main.js,renderer.js -SimpleMatch -Pattern $env:APPETIZE_URL)) {
+            throw "The Electron launcher is not wired to the expected Appetize URL."
+          }
+
+      - name: Build Windows artifacts
+        run: npm run build -- --publish never
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+
+      - name: Upload Windows artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: meta-ai-desktop-windows
+          path: |
+            dist/*.exe
+            dist/*.yml
+            dist/*.blockmap
+          if-no-files-found: error
+          retention-days: 14
+
+  release:
+    name: Create GitHub release for version tag
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build-windows
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download Windows artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: meta-ai-desktop-windows
+          path: release-files
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: gh release create "$GITHUB_REF_NAME" release-files/* --generate-notes --title "Meta AI Desktop $GITHUB_REF_NAME"
