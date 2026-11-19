@@ -30,8 +30,7 @@ jobs:
           node-version: 22
           cache: npm
 
-      # This step fixes the invalid package version before npm ci/build.
-      - name: Fix application version
+      - name: Set valid application version
         shell: pwsh
         run: |
           npm version "$env:APP_VERSION" `
@@ -43,7 +42,7 @@ jobs:
             exit $LASTEXITCODE
           }
 
-          node -p "'Building application version: ' + require('./package.json').version"
+          node -p "'Application version: ' + require('./package.json').version"
 
           if ($LASTEXITCODE -ne 0) {
             exit $LASTEXITCODE
@@ -57,6 +56,15 @@ jobs:
           if ($LASTEXITCODE -ne 0) {
             exit $LASTEXITCODE
           }
+
+      - name: Show Electron Builder configuration
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "electron-builder.yml")) {
+            throw "Missing electron-builder.yml in repository root."
+          }
+
+          Get-Content "electron-builder.yml"
 
       - name: Validate desktop JavaScript
         shell: pwsh
