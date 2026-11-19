@@ -1,65 +1,18 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#07080d" />
-  <title>Meta AI Desktop</title>
-  <link rel="icon" type="image/x-icon" sizes="16x16 24x24 32x32 48x48" href="assets/favicon.ico" />
-  <link rel="icon" type="image/svg+xml" href="assets/app-icon.svg" />
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
-  <link rel="apple-touch-icon" sizes="256x256" href="assets/app-icon-256.png" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <canvas id="current-field" aria-hidden="true"></canvas>
-  <div class="noise" aria-hidden="true"></div>
-  <div class="edge-glow edge-glow-a" aria-hidden="true"></div>
-  <div class="edge-glow edge-glow-b" aria-hidden="true"></div>
+from flask import Flask, request, Response
+import requests
 
-  <main class="app-shell">
-    <header class="topbar">
-      <div class="brand-lockup">
-        <div class="brand-mark"><span></span><span></span><span></span></div>
-        <div>
-          <div class="eyebrow">MUSE AI / DESKTOP BRIDGE</div>
-          <div class="brand-name">Meta AI Desktop</div>
-        </div>
-      </div>
-      <div class="status-pill"><i></i><span>LOCAL SHELL READY</span></div>
-    </header>
+app = Flask(__name__)
+TARGET = "https://appetize.io"
 
-    <section class="hero-grid">
-      <div class="hero-copy">
-        <div class="kicker"><span class="kicker-line"></span> ANDROID SESSION CONSOLE</div>
-        <h1>Think in<br><em>another layer.</em></h1>
-        <p class="lede">A focused desktop doorway into your Meta AI Android build. The shell is local; the test session opens only when you ask for it.</p>
-        <div class="actions">
-          <button id="launch" class="primary-action"><span>Launch Meta AI</span><b>↗</b></button>
-          <button id="copy-url" class="secondary-action">Copy Play URL</button>
-        </div>
-        <div id="toast" class="toast" role="status" aria-live="polite"></div>
-      </div>
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def proxy(path):
+    url = f"{TARGET}/{path}"
+    resp = requests.get(url, headers={k: v for k, v in request.headers.items() if k != 'Host'})
+    # Remove the headers that block embedding
+    excluded = ['X-Frame-Options', 'Content-Security-Policy', 'Content-Security-Policy-Report-Only']
+    headers = [(k, v) for k, v in resp.headers.items() if k not in excluded]
+    return Response(resp.content, resp.status_code, headers)
 
-      <aside class="build-card">
-        <div class="card-top"><span>BUILD SNAPSHOT</span><span class="live-dot">● LIVE LINK</span></div>
-        <div class="app-id"><img src="assets/app-icon.svg" alt="" /><div><strong>Meta AI</strong><small>com.facebook.stella</small></div></div>
-        <div class="metric-row"><div><span>VERSION</span><strong>300.0.0.0.153</strong></div><div><span>BUILD</span><strong>970001999</strong></div></div>
-        <div class="metric-row"><div><span>SIZE</span><strong>138.56 MB</strong></div><div><span>ARCH</span><strong>arm64-v8a</strong></div></div>
-        <div class="card-rule"></div>
-        <div class="url-label">PLAY URL</div>
-        <code>appetize.io/app/b_vmsfd6j2qw2ffdla37n7taxgdq</code>
-      </aside>
-    </section>
-
-    <section class="lower-grid">
-      <div class="signal-card"><div class="signal-mark">✦</div><div><span class="card-label">SESSION TRUTH</span><p>Electron is free. Appetize streaming is the metered part.</p></div></div>
-      <div class="signal-card"><div class="signal-mark">↯</div><div><span class="card-label">DEVICE NOTE</span><p>Bluetooth, camera, NFC and glasses pairing are not available in the emulator.</p></div></div>
-      <div class="docs-card"><span class="card-label">PROJECT NOTES</span><div class="doc-links"><button data-doc="CHAT-DETAILS.md">Chat details</button><button data-doc="APPETIZE-FREE-LIMITS.md">Free limits</button><button data-doc="OWN-CLONE-RESEARCH.md">Clone research</button></div></div>
-    </section>
-
-    <footer><span>LOCAL DESKTOP WRAPPER</span><span>NO ORBITAL VISUALS · ABSTRACT CURRENT FIELD</span><span>v300.0.0.0.153</span></footer>
-  </main>
-  <script src="renderer.js"></script>
-</body>
-</html>
+if __name__ == '__main__':
+    app.run(port=8080)
