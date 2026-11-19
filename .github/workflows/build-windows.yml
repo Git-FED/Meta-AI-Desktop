@@ -12,13 +12,12 @@ on:
 permissions:
   contents: read
 
-env:
-  APP_VERSION: '300.0.153'
-
 jobs:
   build-windows:
     name: Build Windows installer and portable app
     runs-on: windows-latest
+    env:
+      APPETIZE_URL: https://appetize.io/app/b_vmsfd6j2qw2ffdla37n7taxgdq
 
     steps:
       - name: Check out repository
@@ -30,95 +29,27 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Set valid application version
-        shell: pwsh
-        run: |
-          npm version "$env:APP_VERSION" `
-            --no-git-tag-version `
-            --allow-same-version `
-            --ignore-scripts
-
-          if ($LASTEXITCODE -ne 0) {
-            exit $LASTEXITCODE
-          }
-
-          node -p "'Application version: ' + require('./package.json').version"
-
-          if ($LASTEXITCODE -ne 0) {
-            exit $LASTEXITCODE
-          }
-
       - name: Install dependencies
-        shell: pwsh
-        run: |
-          npm ci
-
-          if ($LASTEXITCODE -ne 0) {
-            exit $LASTEXITCODE
-          }
-
-      - name: Write clean Electron Builder configuration
-        shell: pwsh
-        run: |
-          $config = @'
-          extends: null
-
-          productName: Meta AI Desktop
-
-          directories:
-            output: dist
-
-          asar: true
-
-          nsis:
-            artifactName: '${productName}-Setup-${version}-${arch}.${ext}'
-            oneClick: false
-            perMachine: false
-            allowToChangeInstallationDirectory: true
-
-          portable:
-            artifactName: '${productName}-Portable-${version}-${arch}.${ext}'
-          '@
-
-          Set-Content `
-            -LiteralPath "electron-builder.yml" `
-            -Value $config `
-            -Encoding utf8
-
-          Write-Host "=== Generated electron-builder.yml ==="
-          Get-Content -LiteralPath "electron-builder.yml" -Raw
+        run: npm ci
 
       - name: Validate desktop JavaScript
         shell: pwsh
         run: |
-          $files = @(
-            "main.js",
-            "preload.js",
-            "renderer.js"
-          )
+          node --check main.js
+          node --check preload.js
+          node --check renderer.js
 
-          foreach ($file in $files) {
-            node --check $file
-
-            if ($LASTEXITCODE -ne 0) {
-              exit $LASTEXITCODE
-            }
+      - name: Verify Appetize destination
+        shell: pwsh
+        run: |
+          if (-not (Select-String -Path main.js,renderer.js -SimpleMatch -Pattern $env:APPETIZE_URL)) {
+            throw "The Electron launcher is not wired to the expected Appetize URL."
           }
 
-      - name: Build Windows installer and portable app
-        shell: pwsh
+      - name: Build Windows artifacts
+        run: npm run build -- --publish never
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
-        run: |
-          & ".\node_modules\.bin\electron-builder.cmd" `
-            --win nsis portable `
-            --x64 `
-            --config electron-builder.yml `
-            --publish never
-
-          if ($LASTEXITCODE -ne 0) {
-            exit $LASTEXITCODE
-          }
 
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@v4
@@ -136,7 +67,6 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
     needs: build-windows
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
 
@@ -148,14 +78,7 @@ jobs:
           path: release-files
 
       - name: Publish GitHub release
-        shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-        run: |
-          set -euo pipefail
-
-          gh release create "$GITHUB_REF_NAME" release-files/* \
-            --verify-tag \
-            --generate-notes \
-            --title "Meta AI Desktop $GITHUB_REF_NAME"
+        run: gh release create "$GITHUB_REF_NAME" release-files/* --generate-notes --title "Meta AI Desktop $GITHUB_REF_NAME"
