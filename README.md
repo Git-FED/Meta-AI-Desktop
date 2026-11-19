@@ -1,5 +1,9 @@
 # Meta AI Desktop + Git-FED Static Site
 
+## ▶ Play Now — Launch Meta AI
+
+**[Launch the Meta AI desktop app](https://appetize.io/app/b_vmsfd6j2qw2ffdla37n7taxgdq)** — the live Android build (Meta AI, com.facebook.stella) streams in your browser, no install needed.
+
 <img width="255" height="50" alt="Screenshot 2026-11-19 074525" src="https://github.com/user-attachments/assets/49e0870d-5167-4b71-821f-b86c3e39e696" />
 
 A local Electron launcher for a remote Meta AI Android build, paired with a dark, animated Git-FED promotional site that can be deployed as plain static HTML.
@@ -20,7 +24,7 @@ It is intentionally small and inspectable. There is no Manus-hosted website, no 
 
 ## See it work
 
-**Live demo:** none is currently published. The repository contains deployable static files, but `site/robots.txt` and `site/sitemap.xml` still use `https://example.com` until you replace it with your real domain.
+**Live demo:** [Launch Meta AI on Appetize](https://appetize.io/app/b_vmsfd6j2qw2ffdla37n7taxgdq) — the live Android build streams in your browser. The repository contains deployable static files, but `site/robots.txt` and `site/sitemap.xml` still use `https://example.com` until you replace it with your real domain.
 
 **Fastest local static preview:**
 
