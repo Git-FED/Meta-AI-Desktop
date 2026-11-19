@@ -8,40 +8,11 @@
   "private": true,
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder --win",
-    "build:dir": "electron-builder --dir"
+    "build": "electron-builder --win --config electron-builder.yml",
+    "build:dir": "electron-builder --win --dir --config electron-builder.yml"
   },
   "devDependencies": {
     "electron": "latest",
     "electron-builder": "latest"
-  },
-  "build": {
-    "appId": "ai.muse.meta.desktop",
-    "productName": "Meta AI Desktop",
-    "directories": {
-      "output": "dist"
-    },
-    "files": [
-      "main.js",
-      "preload.js",
-      "index.html",
-      "renderer.js",
-      "styles.css",
-      "assets/**/*",
-      "docs/**/*",
-      "package.json"
-    ],
-    "win": {
-      "target": [
-        "nsis",
-        "portable"
-      ]
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "shortcutName": "Meta AI Desktop"
-    }
   }
 }

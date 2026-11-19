@@ -12,6 +12,7 @@ function createHomeWindow() {
     minWidth: 980,
     minHeight: 700,
     backgroundColor: '#07080d',
+    icon: path.join(__dirname, 'assets', 'app-icon.ico'),
     title: 'Meta AI Desktop',
     autoHideMenuBar: true,
     webPreferences: {
@@ -38,6 +39,7 @@ function openPlayWindow() {
     minWidth: 900,
     minHeight: 640,
     backgroundColor: '#0b0c12',
+    icon: path.join(__dirname, 'assets', 'app-icon.ico'),
     title: 'Meta AI — Appetize Session',
     autoHideMenuBar: true,
     webPreferences: {
@@ -53,6 +55,7 @@ function openPlayWindow() {
 }
 
 app.whenReady().then(() => {
+  app.setAppUserModelId('ai.muse.meta.desktop');
   createHomeWindow();
 
   app.on('activate', () => {

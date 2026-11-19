@@ -38,3 +38,15 @@
 
 - `site/login.html` — Join / Login email-list page with Supabase Auth modal, password reset, session state, and logout.
 - `site/js/login.js` — Maintainable client-side auth behavior for the Join / Login page.
+
+- `assets/app-icon.ico` — multi-resolution Windows application icon for the installer and Electron windows.
+- `assets/app-icon-*.png` — 16–512 pixel raster icon family for Windows, browser, and shortcut surfaces.
+- `assets/favicon.ico`, `assets/favicon-16.png`, `assets/favicon-32.png` — desktop and static-site favicon fallbacks.
+- `site/assets/app-icon-256.png` — static-site Apple touch icon fallback.
+
+- `electron-builder.yml` — explicit Windows NSIS and portable packaging configuration.
+- `.github/workflows/build-windows.yml` — GitHub Actions Windows build and tagged-release workflow.
+- `.github/workflows/validate.yml` — syntax, asset, and static-route validation workflow.
+- `.github/workflows/deploy-pages.yml` — optional GitHub Pages deployment for `site/`.
+- `.gitignore` — ignores dependencies, build output, logs, and local secrets.
+- `docs/GITHUB-BUILD.md` — exact local and GitHub build instructions.

@@ -1,0 +1,45 @@
+appId: ai.muse.meta.desktop
+productName: Meta AI Desktop
+copyright: Copyright © 2026 Muse Ai
+
+# Keep packaged files limited to the actual Electron desktop application.
+# The companion static site remains in site/ for GitHub Pages or Cloudflare Pages.
+directories:
+  output: dist
+
+files:
+  - main.js
+  - preload.js
+  - index.html
+  - renderer.js
+  - styles.css
+  - assets/**/*
+  - docs/**/*
+  - package.json
+
+win:
+  icon: assets/app-icon.ico
+  publisherName: Muse Ai
+  target:
+    - target: nsis
+      arch:
+        - x64
+    - target: portable
+      arch:
+        - x64
+  artifactName: Meta-AI-Desktop-${version}-${arch}.${ext}
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Meta AI Desktop
+  uninstallDisplayName: Meta AI Desktop
+
+portable:
+  artifactName: Meta-AI-Desktop-${version}-portable.${ext}
+
+npmRebuild: false
+
+publish: null

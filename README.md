@@ -53,6 +53,10 @@ The screenshots below were rendered from the repository's actual static site wit
 
 ## Quick start
 
+### Windows icon and packaging set
+
+The Electron app now includes a symbol-only Windows icon package: `assets/app-icon.ico` contains 16, 24, 32, 48, 64, 128, and 256 pixel layers. Matching PNG sizes, SVG artwork, favicon ICO/PNG fallbacks, and the Windows installer configuration are included. The browser shell, Electron windows, app user model ID, and electron-builder all point at the same icon family.
+
 ### Electron launcher
 
 ```bash
@@ -66,7 +70,9 @@ npm start
 npm run build
 ```
 
-The Electron entry point is [`main.js`](main.js). The local shell is [`index.html`](index.html), its secure bridge is [`preload.js`](preload.js), and the animated launcher behavior is in [`renderer.js`](renderer.js). The Play URL is configured in both `main.js` and `renderer.js`:
+For GitHub-hosted Windows builds, see [`docs/GITHUB-BUILD.md`](docs/GITHUB-BUILD.md). The workflow uploads the NSIS installer and portable executable as downloadable Actions artifacts; version tags also create GitHub releases.
+
+The Electron entry point is [`main.js`](main.js). The local shell is [`index.html`](index.html), its secure bridge is [`preload.js`](preload.js), and the animated launcher behavior is in [`renderer.js`](renderer.js). Windows packaging is defined in [`electron-builder.yml`](electron-builder.yml), and GitHub Actions builds the installer on `windows-latest`. The Play URL is configured in both `main.js` and `renderer.js`:
 
 ```text
 https://appetize.io/app/b_vmsfd6j2qw2ffdla37n7taxgdq
@@ -132,6 +138,7 @@ All promotional artwork is local to the repository. The visual language is inten
 - [`docs/CHAT-DETAILS.md`](docs/CHAT-DETAILS.md) — build and Appetize details preserved from the supplied project notes
 - [`docs/APPETIZE-FREE-LIMITS.md`](docs/APPETIZE-FREE-LIMITS.md) — what the Appetize minutes affect
 - [`docs/OWN-CLONE-RESEARCH.md`](docs/OWN-CLONE-RESEARCH.md) — why a true Appetize-style clone is a separate infrastructure product
+- [`docs/GITHUB-BUILD.md`](docs/GITHUB-BUILD.md) — GitHub Actions, Windows artifacts, tagging, and Pages deployment
 - [`FILE-INVENTORY.md`](FILE-INVENTORY.md) — package contents
 
 ## Deployment
@@ -150,7 +157,7 @@ Before publishing, replace the example domain in [`site/robots.txt`](site/robots
 - Appetize streaming requires internet access and consumes the Appetize session allowance described in the docs.
 - Emulator-restricted capabilities such as Bluetooth pairing, camera access, NFC, and Meta AI glasses pairing may not work through this remote session.
 - The static site has no backend. Its age gates are front-end confirmation flows, not identity verification.
-- No live demo URL, GitHub repository URL, GitHub Actions workflow, or published deployment is claimed because none is configured in this package.
+- No live demo URL or GitHub repository URL is claimed because none is configured in this package. GitHub Actions build and Pages workflow files are included, but they run only after the repository is pushed to GitHub and Actions/Pages are enabled.
 - The private Matrix URL is intentionally not in the public footer; it is revealed only after the separate 18+ and eligible-country gate.
 - The Join / Login page requires a deployed HTTP(S) origin and a loaded Supabase client; the static preview still renders the widget if the external auth script is unavailable.
 
