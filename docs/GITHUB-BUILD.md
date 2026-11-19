@@ -12,6 +12,8 @@ The workflow is [`../.github/workflows/build-windows.yml`](../.github/workflows/
 4. Runs `npm run build`.
 5. Uploads the NSIS installer, portable executable, update metadata, and blockmap files as a workflow artifact.
 
+The desktop package uses valid semantic version `300.0.153`; the upstream Meta AI build label `300.0.0.0.153` is informational and is not used as the Electron package version.
+
 The build configuration is [`../electron-builder.yml`](../electron-builder.yml). It points electron-builder at [`../assets/app-icon.ico`](../assets/app-icon.ico), which contains seven Windows icon layers.
 
 ## Triggering a build

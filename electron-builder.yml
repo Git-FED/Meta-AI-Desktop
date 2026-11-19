@@ -19,7 +19,6 @@ files:
 
 win:
   icon: assets/app-icon.ico
-  publisherName: Muse Ai
   target:
     - target: nsis
       arch:

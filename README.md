@@ -1,18 +1,10 @@
 # Meta AI Desktop + Git-FED Static Site
 
-## ▶ Play Now — Launch Meta AI
-
-**[Launch the Meta AI desktop app](https://appetize.io/app/b_vmsfd6j2qw2ffdla37n7taxgdq)** — the live Android build (Meta AI, com.facebook.stella) streams in your browser, no install needed.
-
-<img width="255" height="50" alt="Screenshot 2026-11-19 074525" src="https://github.com/user-attachments/assets/49e0870d-5167-4b71-821f-b86c3e39e696" />
-
 A local Electron launcher for a remote Meta AI Android build, paired with a dark, animated Git-FED promotional site that can be deployed as plain static HTML.
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-8aa8ff.svg)](LICENSE)
 
 > **Two deliverables, one repository:** the root project is the desktop wrapper; [`site/`](site/) is an independent GitHub Pages / Cloudflare Pages package.
-
-<img width="1285" height="692" alt="Screenshot 2026-11-18 213633" src="https://github.com/user-attachments/assets/26f00306-f1be-4b70-9304-19b2be1d06f9" />
 
 ## Why this exists
 
@@ -24,7 +16,7 @@ It is intentionally small and inspectable. There is no Manus-hosted website, no 
 
 ## See it work
 
-**Live demo:** [Launch Meta AI on Appetize](https://appetize.io/app/b_vmsfd6j2qw2ffdla37n7taxgdq) — the live Android build streams in your browser. The repository contains deployable static files, but `site/robots.txt` and `site/sitemap.xml` still use `https://example.com` until you replace it with your real domain.
+**Live demo:** none is currently published. The repository contains deployable static files, but `site/robots.txt` and `site/sitemap.xml` still use `https://example.com` until you replace it with your real domain.
 
 **Fastest local static preview:**
 
@@ -80,7 +72,7 @@ npm run build
 
 For GitHub-hosted Windows builds, see [`docs/GITHUB-BUILD.md`](docs/GITHUB-BUILD.md). The workflow uploads the NSIS installer and portable executable as downloadable Actions artifacts; version tags also create GitHub releases.
 
-The Electron entry point is [`main.js`](main.js). The local shell is [`index.html`](index.html), its secure bridge is [`preload.js`](preload.js), and the animated launcher behavior is in [`renderer.js`](renderer.js). Windows packaging is defined in [`electron-builder.yml`](electron-builder.yml), and GitHub Actions builds the installer on `windows-latest`. The Play URL is configured in both `main.js` and `renderer.js`:
+The Electron entry point is [`main.js`](main.js). The local shell is [`index.html`](index.html), its secure bridge is [`preload.js`](preload.js), and the animated launcher behavior is in [`renderer.js`](renderer.js). Windows packaging is defined in [`electron-builder.yml`](electron-builder.yml), and GitHub Actions builds the installer on `windows-latest`. The desktop package version is `300.0.153`; the upstream Meta AI build label remains `300.0.0.0.153` in the launcher UI and project notes. The Play URL is configured in both `main.js` and `renderer.js`:
 
 ```text
 https://appetize.io/app/b_vmsfd6j2qw2ffdla37n7taxgdq

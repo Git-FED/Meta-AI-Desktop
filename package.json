@@ -1,6 +1,6 @@
 {
   "name": "meta-ai-desktop",
-  "version": "300.0.0.0.153",
+  "version": "300.0.153",
   "description": "A local dark desktop launcher for the Meta AI Android Appetize build.",
   "main": "main.js",
   "author": "Muse Ai",
